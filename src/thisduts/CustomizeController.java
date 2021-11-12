@@ -1,11 +1,11 @@
 package thisduts;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
+import javafx.event.ActionEvent;
 
 import java.util.Arrays;
 
@@ -25,7 +25,6 @@ public class CustomizeController {
     public void initialize() {
         pizzaSize.getItems().removeAll(pizzaSize.getItems());
         pizzaSize.getItems().addAll("small", "medium", "large");
-        pizzaSize.getSelectionModel().select("small");
     }
 
     private void createDeluxe() {
@@ -37,7 +36,7 @@ public class CustomizeController {
                 additionalToppings.getItems().add(Topping.toString(Topping));
         });
         name.setText("Deluxe");
-        pizzaImage.setImage(new Image("C:\\Users\\User\\IdeaProjects\\Project 4\\src\\thisduts\\pics\\deluxe.jpg"));
+        pizzaImage.setImage(new Image("/thisduts/pics/deluxe.jpg"));
     }
 
     private void createPepperoni(){
@@ -48,7 +47,7 @@ public class CustomizeController {
                 additionalToppings.getItems().add(Topping.toString(Topping));
         });
         name.setText("Pepperoni");
-        pizzaImage.setImage(new Image("C:\\Users\\User\\IdeaProjects\\Project 4\\src\\thisduts\\pics\\pepperoni.jpg"));
+        pizzaImage.setImage(new Image("thisduts/pics/pepperoni.jpg"));
     }
 
     private void createHawaiian(){
@@ -59,7 +58,7 @@ public class CustomizeController {
                 additionalToppings.getItems().add(Topping.toString(Topping));
         });
         name.setText("Hawaiian");
-        pizzaImage.setImage(new Image("C:\\Users\\User\\IdeaProjects\\Project 4\\src\\thisduts\\pics\\hawaiian.jpg"));
+        pizzaImage.setImage(new Image("thisduts/pics/hawaiian.jpg"));
     }
 
     public void setMainController(MenuController controller) {
@@ -73,4 +72,36 @@ public class CustomizeController {
         }
     }
 
+    @FXML
+    void addTopping(ActionEvent event) {
+        if(!additionalToppings.getSelectionModel().isEmpty())
+            moveTopping(additionalToppings, selectedToppings);
+        else {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Warning!!");
+            alert.setHeaderText("A topping was not selected.");
+            alert.setContentText("Please select a topping.");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    void removeTopping(ActionEvent event) {
+        if(!selectedToppings.getSelectionModel().isEmpty())
+            moveTopping(selectedToppings, additionalToppings);
+        else {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Warning!!");
+            alert.setHeaderText("A topping was not selected.");
+            alert.setContentText("Please select a topping.");
+            alert.showAndWait();
+        }
+    }
+
+    private void moveTopping(ListView currentList, ListView targetList) {
+        String temp = currentList.getSelectionModel().getSelectedItems().toString();
+        temp = temp.substring(1, temp.length() - 1);
+        currentList.getItems().remove(temp);
+        targetList.getItems().add(temp);
+    }
 }

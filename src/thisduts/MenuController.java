@@ -19,8 +19,8 @@ public class MenuController {
             openPizza();
         });
         hawaiian.setOnAction(e->{
-                lastClicked = 2;
-                openPizza();
+            lastClicked = 2;
+            openPizza();
         });
         pepperoni.setOnAction(e->{
             lastClicked = 3;

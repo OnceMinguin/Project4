@@ -21,6 +21,7 @@ public class Main extends Application {
             Parent root = FXMLLoader.load(getClass().getResource( "MainMenu.fxml"));
             primaryStage.setTitle("Pizza Maker");
             primaryStage.setScene(new Scene(root, 426, 653));
+            primaryStage.setResizable(false);
             primaryStage.show();
         } catch(Exception e) {
             e.printStackTrace();

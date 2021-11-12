@@ -6,8 +6,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.scene.control.Alert.AlertType;
 import javafx.event.ActionEvent;
-
+import java.text.DecimalFormat;
 import java.util.Arrays;
+
+import static thisduts.PizzaMaker.createPizza;
 
 public class CustomizeController {
     @FXML
@@ -18,15 +20,30 @@ public class CustomizeController {
     private ListView additionalToppings, selectedToppings;
     @FXML
     private Label name;
+    @FXML
+    private TextField price;
 
     private MenuController mainController;
-
+    private Pizza pizza;
+    public static final DecimalFormat df2 = new DecimalFormat( "#0.00" );
     @FXML
     public void initialize() {
         pizzaSize.getItems().removeAll(pizzaSize.getItems());
         pizzaSize.getItems().addAll("small", "medium", "large");
+        pizzaSize.getSelectionModel().selectFirst();
     }
 
+    @FXML
+    void changeSize(ActionEvent event){
+        if (pizzaSize.getValue().equals("small")){
+            pizza.size = Size.Small;
+        } else if (pizzaSize.getValue().equals("medium")){
+            pizza.size = Size.Medium;
+        } else{
+            pizza.size = Size.Large;
+        }
+        price.setText(df2.format(pizza.price()));
+    }
     private void createDeluxe() {
         Arrays.asList(Topping.values()).forEach(Topping -> {
             if (Topping == thisduts.Topping.Pepperoni || Topping == thisduts.Topping.Sausage || Topping == thisduts.Topping.Onion ||
@@ -65,18 +82,31 @@ public class CustomizeController {
         mainController = controller;
         if (mainController.lastClicked == 1) {
             createDeluxe();
+            pizza = createPizza("Deluxe");
+            pizza.size = Size.Small;
         } else if (mainController.lastClicked == 2) {
             createHawaiian();
+            pizza = createPizza("Hawaiian");
+            pizza.size = Size.Small;
         } else {
             createPepperoni();
+            pizza = createPizza("Pepperoni");
+            pizza.size = Size.Small;
         }
+        price.setText(df2.format(pizza.price()));
     }
 
     @FXML
     void addTopping(ActionEvent event) {
-        if(!additionalToppings.getSelectionModel().isEmpty())
-            moveTopping(additionalToppings, selectedToppings);
-        else {
+        String temp;
+        if(!additionalToppings.getSelectionModel().isEmpty()) {
+            temp = moveTopping(additionalToppings, selectedToppings);
+            if (temp.equals("")){
+                return;
+            }
+            pizza.addToppings(toTopping(temp));
+            price.setText(df2.format(pizza.price()));
+        }else {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Warning!!");
             alert.setHeaderText("A topping was not selected.");
@@ -87,9 +117,15 @@ public class CustomizeController {
 
     @FXML
     void removeTopping(ActionEvent event) {
-        if(!selectedToppings.getSelectionModel().isEmpty())
-            moveTopping(selectedToppings, additionalToppings);
-        else {
+        String temp;
+        if(!selectedToppings.getSelectionModel().isEmpty()) {
+            temp = moveTopping(selectedToppings, additionalToppings);
+            if (temp.equals("")) {
+                return;
+            }
+            pizza.removeToppings(toTopping(temp));
+            price.setText(df2.format(pizza.price()));
+        }else {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Warning!!");
             alert.setHeaderText("A topping was not selected.");
@@ -98,10 +134,58 @@ public class CustomizeController {
         }
     }
 
-    private void moveTopping(ListView currentList, ListView targetList) {
+    private Topping toTopping(String topping){
+        if (topping.equals("Black Olives")){
+            return Topping.BlackOlives;
+        } else if (topping.equals("Green Pepper")) {
+            return Topping.GreenPepper;
+        } else if (topping.equals("Pineapple")) {
+            return Topping.Pineapple;
+        } else if (topping.equals("Ham")) {
+            return Topping.Ham;
+        } else if (topping.equals("Pepperoni")) {
+            return Topping.Pepperoni;
+        } else if (topping.equals("Sausage")) {
+            return Topping.Sausage;
+        } else if (topping.equals("Chicken")) {
+            return Topping.Chicken;
+        } else if (topping.equals("Beef")) {
+            return Topping.Beef;
+        } else if (topping.equals("Onion")) {
+            return Topping.Onion;
+        } else if (topping.equals("Cheese")) {
+            return Topping.Cheese;
+        } else {
+            return Topping.Mushroom;
+        }
+    }
+
+    private String moveTopping(ListView currentList, ListView targetList) {
         String temp = currentList.getSelectionModel().getSelectedItems().toString();
         temp = temp.substring(1, temp.length() - 1);
+        if (mainController.lastClicked == 1){
+            if (temp.equals("Green Pepper") || temp.equals("Pepperoni") || temp.equals("Mushroom")
+                    || temp.equals("Sausage") || temp.equals("Onion")){
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("Warning!!");
+                alert.setHeaderText("An essential topping cannot be removed!");
+                alert.setContentText("Please select another topping.");
+                alert.showAndWait();
+                return "";
+            }
+        }
         currentList.getItems().remove(temp);
         targetList.getItems().add(temp);
+        return temp;
+    }
+
+    @FXML
+    void addOrder(ActionEvent event){
+        mainController.order.addToOrder(pizza);
+        Alert alert = new Alert(AlertType.WARNING);
+        alert.setTitle("Notice!!");
+        alert.setHeaderText("The pizza was added to your order.");
+        alert.showAndWait();
     }
 }
+

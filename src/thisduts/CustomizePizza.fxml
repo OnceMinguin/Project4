@@ -32,7 +32,7 @@
             <VBox alignment="CENTER">
                <children>
                   <Label text="Pizza Size" />
-                  <ComboBox fx:id="pizzaSize" prefWidth="150.0" />
+                  <ComboBox fx:id="pizzaSize" onAction="#changeSize" prefWidth="150.0" />
                </children>
                <HBox.margin>
                   <Insets left="30.0" />
@@ -89,8 +89,8 @@
       <HBox alignment="CENTER" prefHeight="94.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Price $" />
-            <TextField />
-            <Button mnemonicParsing="false" text="Add to Order">
+            <TextField fx:id="price" editable="false" />
+            <Button mnemonicParsing="false" onAction="#addOrder" text="Add to Order">
                <HBox.margin>
                   <Insets left="30.0" />
                </HBox.margin>

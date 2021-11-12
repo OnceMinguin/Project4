@@ -102,7 +102,7 @@
                   </ImageView>
                </graphic>
                <VBox.margin>
-                  <Insets top="30.0" />
+                  <Insets right="10.0" top="30.0" />
                </VBox.margin>
             </Button>
             <Label text="Store Orders">

@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="thisduts.CustomizeController">
    <top>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="400.0" BorderPane.alignment="CENTER">
@@ -77,8 +76,8 @@
    <center>
       <VBox alignment="CENTER" prefHeight="296.0" prefWidth="140.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="add &gt;&gt;" />
-            <Button mnemonicParsing="false" text="&lt;&lt; remove">
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#addTopping" text="add &gt;&gt;" />
+            <Button fx:id="removeButton" mnemonicParsing="false" onAction="#removeTopping" text="&lt;&lt; remove">
                <VBox.margin>
                   <Insets top="15.0" />
                </VBox.margin>

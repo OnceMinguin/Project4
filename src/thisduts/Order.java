@@ -1,24 +1,147 @@
 package thisduts;
 
 import java.util.ArrayList;
+import java.text.DecimalFormat;
+import java.util.StringTokenizer;
+
+import static thisduts.PizzaMaker.createPizza;
 
 public class Order {
     private String pNumber;
     private ArrayList<Pizza> pizzas = new ArrayList<>();
+    private double salesTax;
+    private double subTotal;
+    private double total;
 
+    private static final double SALES_TAX = .06625;
+    public static final DecimalFormat df2 = new DecimalFormat( "#0.00" );
 
     public Order(){
     }
+
     public Order(String pNumber) {
         this.pNumber = pNumber;
     }
+
     public boolean checkNumber(){
         if (pNumber == null){
             return false;
         } return true;
     }
+
+    public String getPNumber() {
+        return pNumber;
+    }
+
     public void addToOrder(Pizza pizza) {
         pizzas.add(pizza);
     }
 
+    public double getSubTotal(){
+        subTotal = 0;
+        for (int i = 0; i < pizzas.size(); i++){
+            subTotal += pizzas.get(i).price();
+        }
+        return subTotal;
+    }
+
+    public double getSalesTax(){
+        salesTax = subTotal * SALES_TAX;
+        return salesTax;
+    }
+
+    public double getTotal(){
+        total = salesTax + subTotal;
+        return total;
+    }
+
+    public int getSize() {
+        return pizzas.size();
+    }
+
+    public String getPizza(int index){
+        String string = new String();
+        if(pizzas.get(index).checkType() == 1) {
+            string = "Deluxe pizza, ";
+        } else if(pizzas.get(index).checkType() == 2) {
+            string = "Hawaiian pizza, ";
+        } else{
+            string = "Pepperoni pizza, ";
+        }
+        string = string.concat(pizzas.get(index).getToppings());
+        string = string.concat(pizzas.get(index).getSize());
+        string = string.concat(df2.format(pizzas.get(index).price()));
+        return string;
+    }
+
+    public void removePizza(String text) {
+        Pizza compareTo;
+        for (int i = 0; i < pizzas.size(); i++) {
+            StringTokenizer st1 = new StringTokenizer(text, ", ");
+            int total = 0;
+            while(st1.hasMoreTokens()) {
+                st1.nextToken();
+                total++;
+            }
+            st1 = new StringTokenizer(text, ", ");
+
+            StringTokenizer st2 = new StringTokenizer(st1.nextToken(), " ");
+            String flavor = st2.nextToken();
+            compareTo = createPizza(flavor);
+            int toppings;
+            if (flavor.equals("Deluxe")) {
+                toppings = 5;
+            } else if (flavor.equals("Hawaiian")) {
+                toppings = 2;
+            } else {
+                toppings = 1;
+            }
+            for (int j = 0; j < toppings + 1; j++) {
+                st1.nextToken();
+            }
+            for (int j = toppings + 1; j < total - 3; j++) {
+                compareTo.addToppings(toTopping(st1.nextToken()));
+            }
+
+            String size = st1.nextToken();
+            if (size.equals("Small")) {
+                compareTo.size = Size.Small;
+            } else if (size.equals("Medium")) {
+                compareTo.size = Size.Medium;
+            } else {
+                compareTo.size = Size.Large;
+            }
+
+            if (pizzas.get(i).equals(compareTo)) {
+                pizzas.remove(i);
+                return;
+            }
+        }
+    }
+
+    private Topping toTopping(String topping){
+        if (topping.equals("BlackOlives")){
+            return Topping.BlackOlives;
+        } else if (topping.equals("GreenPepper")) {
+            return Topping.GreenPepper;
+        } else if (topping.equals("Pineapple")) {
+            return Topping.Pineapple;
+        } else if (topping.equals("Ham")) {
+            return Topping.Ham;
+        } else if (topping.equals("Pepperoni")) {
+            return Topping.Pepperoni;
+        } else if (topping.equals("Sausage")) {
+            return Topping.Sausage;
+        } else if (topping.equals("Chicken")) {
+            return Topping.Chicken;
+        } else if (topping.equals("Beef")) {
+            return Topping.Beef;
+        } else if (topping.equals("Onion")) {
+            return Topping.Onion;
+        } else if (topping.equals("Cheese")) {
+            return Topping.Cheese;
+        } else {
+            return Topping.Mushroom;
+        }
+    }
 }

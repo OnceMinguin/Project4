@@ -10,11 +10,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+import java.util.ArrayList;
+
 public class MenuController {
-    @FXML Button deluxe, hawaiian, pepperoni;
-    @FXML TextField phoneNumber;
+    @FXML private Button deluxe, hawaiian, pepperoni;
+    @FXML private TextField phoneNumber;
     protected int lastClicked = -1;
     protected Order order = new Order();
+    protected StoresOrders allOrders = new StoresOrders();
 
     @FXML
     public void initialize() {
@@ -75,6 +78,9 @@ public class MenuController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/thisduts/CurrentOrder.fxml"));
             BorderPane root = (BorderPane) loader.load();
 
+            CurrOrderController orderView = loader.getController();
+            orderView.setMainController(this);
+
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Place Your Order");
@@ -90,6 +96,9 @@ public class MenuController {
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/thisduts/StoreOrders.fxml"));
             BorderPane root = (BorderPane) loader.load();
+
+            StoreController storeView = loader.getController();
+            storeView.setMainController(this);
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -119,8 +128,18 @@ public class MenuController {
             alert.showAndWait();
             return;
         }
+        for (int i = 0; i < allOrders.getSize(); i++ ) {
+            if (allOrders.getPNumber(i) == phoneNumber.getText()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning!!");
+                alert.setHeaderText("This phone number already has an order.");
+                alert.setContentText("Please enter another phone number.");
+                alert.showAndWait();
+                return;
+            }
+        }
         order = new Order(phoneNumber.getText());
-        Alert alert = new Alert(Alert.AlertType.WARNING);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Notice!!");
         alert.setHeaderText("Starting a new order.");
         alert.showAndWait();

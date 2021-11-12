@@ -9,4 +9,8 @@ public abstract class Pizza {
     public abstract double price();
     public abstract void addToppings(Topping topping);
     public abstract void removeToppings(Topping topping);
+    public abstract int checkType();
+    public abstract String getSize();
+    public abstract String getToppings();
+    public abstract boolean equals(Pizza pizza);
 }

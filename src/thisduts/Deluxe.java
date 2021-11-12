@@ -37,4 +37,42 @@ public class Deluxe extends Pizza {
     public void removeToppings(Topping topping){
         toppings.remove(topping);
     }
+
+    @Override
+    public int checkType(){
+        return 1;
+    }
+
+    @Override
+    public String getToppings(){
+        String getToppings = new String();
+        for (int i = 0 ; i < toppings.size(); i++){
+            getToppings = getToppings.concat(toppings.get(i).toString() + ", ");
+        }
+        return getToppings;
+    }
+
+    @Override
+    public String getSize(){
+        String getSize = new String();
+        getSize = getSize.concat(size.toString() + ", ");
+        return getSize;
+    }
+
+    @Override
+    public boolean equals(Pizza pizza) {
+        if (this.size != pizza.size){
+            return false;
+        } else if (pizza.checkType() != 1) {
+            return false;
+        } else if (this.toppings.size() != pizza.toppings.size()) {
+            return false;
+        }
+        for (int i = 0; i < pizza.toppings.size(); i++) {
+            if (!this.toppings.get(i).equals(pizza.toppings.get(i))){
+                return false;
+            }
+        }
+        return true;
+    }
 }

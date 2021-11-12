@@ -23,6 +23,8 @@ public class Pepperoni extends Pizza {
         }
         return price + (toppings.size() - MIN_TOPPING) * TOPPING_PRICE;
     }
+
+
     @Override
     public void addToppings(Topping topping){
         toppings.add(topping);
@@ -32,4 +34,43 @@ public class Pepperoni extends Pizza {
     public void removeToppings(Topping topping){
         toppings.remove(topping);
     }
+
+    @Override
+    public int checkType(){
+        return 3;
+    }
+
+    @Override
+    public String getToppings(){
+        String getTopping = new String();
+        for (int i = 0 ; i < toppings.size(); i++){
+            getTopping = getTopping.concat(toppings.get(i).toString() + ", ");
+        }
+        return getTopping;
+    }
+
+    @Override
+    public String getSize(){
+        String getSize = new String();
+        getSize = getSize.concat(size.toString() + ", ");
+        return getSize;
+    }
+
+    @Override
+    public boolean equals(Pizza pizza) {
+        if (this.size != pizza.size){
+            return false;
+        } else if (pizza.checkType() != 3) {
+            return false;
+        } else if (this.toppings.size() != pizza.toppings.size()) {
+            return false;
+        }
+        for (int i = 0; i < pizza.toppings.size(); i++) {
+            if (!this.toppings.get(i).equals(pizza.toppings.get(i))){
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

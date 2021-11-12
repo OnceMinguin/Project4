@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="thisduts.StoreController">
    <top>
       <VBox alignment="CENTER" prefHeight="91.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
@@ -28,7 +27,7 @@
                         <Insets left="30.0" />
                      </HBox.margin>
                   </Label>
-                  <ComboBox prefWidth="150.0">
+                  <ComboBox fx:id="phoneNumber" onAction="#selectOrder" prefWidth="150.0">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
@@ -38,7 +37,7 @@
                         <Insets left="30.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField />
+                  <TextField fx:id="orderTotal" editable="false" />
                </children>
             </HBox>
          </children>
@@ -47,15 +46,15 @@
    <center>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <ListView prefWidth="574.0" />
+            <ListView fx:id="orders" prefWidth="574.0" />
          </children>
       </HBox>
    </center>
    <bottom>
       <HBox alignment="CENTER" prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Cancel Order" />
-            <Button mnemonicParsing="false" text="Export Store Orders">
+            <Button mnemonicParsing="false" onAction="#removeOrder" text="Cancel Order" />
+            <Button mnemonicParsing="false" onAction="#exportFile" text="Export Store Orders">
                <HBox.margin>
                   <Insets left="30.0" />
                </HBox.margin>

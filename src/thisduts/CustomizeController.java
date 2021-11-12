@@ -173,6 +173,20 @@ public class CustomizeController {
                 alert.showAndWait();
                 return "";
             }
+        } else if (mainController.lastClicked == 2 && (temp.equals("Pineapple") || temp.equals("Ham"))) {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Warning!!");
+            alert.setHeaderText("An essential topping cannot be removed!");
+            alert.setContentText("Please select another topping.");
+            alert.showAndWait();
+            return "";
+        } else if (mainController.lastClicked == 3 && temp.equals("Pepperoni")) {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Warning!!");
+            alert.setHeaderText("An essential topping cannot be removed!");
+            alert.setContentText("Please select another topping.");
+            alert.showAndWait();
+            return "";
         }
         currentList.getItems().remove(temp);
         targetList.getItems().add(temp);
@@ -182,7 +196,28 @@ public class CustomizeController {
     @FXML
     void addOrder(ActionEvent event){
         mainController.order.addToOrder(pizza);
-        Alert alert = new Alert(AlertType.WARNING);
+        Pizza temp = pizza;
+        if (mainController.lastClicked == 1) {
+            pizza = createPizza("Deluxe");
+        } else if (mainController.lastClicked == 2) {
+            pizza = createPizza("Hawaiian");
+        } else {
+            pizza = createPizza("Pepperoni");
+        }
+
+        if (pizzaSize.getValue().equals("small")){
+            pizza.size = Size.Small;
+        } else if (pizzaSize.getValue().equals("medium")){
+            pizza.size = Size.Medium;
+        } else{
+            pizza.size = Size.Large;
+        }
+
+        for(int i = pizza.toppings.size(); i < temp.toppings.size(); i++) {
+            pizza.addToppings(temp.toppings.get(i));
+        }
+
+        Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Notice!!");
         alert.setHeaderText("The pizza was added to your order.");
         alert.showAndWait();

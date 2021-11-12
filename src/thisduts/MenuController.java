@@ -31,7 +31,7 @@ public class MenuController {
     @FXML
     void placeOrder(ActionEvent event) {
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/thisduts/CustomizePizza.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/thisduts/CurrentOrder.fxml"));
             BorderPane root = (BorderPane) loader.load();
 
             Stage stage = new Stage();
@@ -47,7 +47,7 @@ public class MenuController {
     @FXML
     void checkOrders(ActionEvent event) {
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/thisduts/CustomizePizza.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/thisduts/StoreOrders.fxml"));
             BorderPane root = (BorderPane) loader.load();
 
             Stage stage = new Stage();

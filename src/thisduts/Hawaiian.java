@@ -16,7 +16,7 @@ public class Hawaiian extends Pizza {
     private static final double SMALL = 10.99;
     private static final double MEDIUM = 12.99;
     private static final double LARGE = 14.99;
-    private static final double TOPPING_PRICE = 1.79;
+    private static final double TOPPING_PRICE = 1.49;
     private static final int MIN_TOPPING = 2;
     private static final int HAWAIIAN_TYPE = 2;
 

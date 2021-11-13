@@ -20,6 +20,8 @@ public class StoresOrders {
      * @param file to be exported to
      */
     public void Export(File file){
+        if (file == null)
+            return;
         if (file.exists()) {
             System.out.println("File already exists.");
             System.exit(1);

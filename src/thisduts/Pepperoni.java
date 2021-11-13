@@ -15,7 +15,7 @@ public class Pepperoni extends Pizza {
     private static final double SMALL = 8.99;
     private static final double MEDIUM = 10.99;
     private static final double LARGE = 12.99;
-    private static final double TOPPING_PRICE = 1.79;
+    private static final double TOPPING_PRICE = 1.49;
     private static final int MIN_TOPPING = 1;
     private static final int PEPPERONI_TYPE = 3;
 

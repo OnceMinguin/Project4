@@ -19,7 +19,7 @@ public class Deluxe extends Pizza {
     private static final double SMALL = 12.99;
     private static final double MEDIUM = 14.99;
     private static final double LARGE = 16.99;
-    private static final double TOPPING_PRICE = 1.79;
+    private static final double TOPPING_PRICE = 1.49;
     private static final int MIN_TOPPING = 5;
     private static final int DELUXE_TYPE = 1;
 

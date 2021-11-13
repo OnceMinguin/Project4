@@ -1,8 +1,17 @@
 package thisduts;
 
+/**
+ * creates the enum class toppings
+ * @author Andy Li, Henry lin
+ */
 public enum Topping {
     Pineapple, Ham, Pepperoni, Sausage, Chicken, Beef, GreenPepper, Onion, Mushroom, Cheese, BlackOlives;
 
+    /**
+     * converts the size from enum to a string
+     * @param topping
+     * @return string form of the size
+     */
     public String toString(Topping topping) {
         if (topping.equals(BlackOlives)){
             return "Black Olives";

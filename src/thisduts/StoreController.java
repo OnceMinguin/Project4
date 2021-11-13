@@ -8,20 +8,27 @@ import javafx.event.ActionEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.PrintWriter;
 import java.text.DecimalFormat;
 
+/**
+ * Controller for the StoreOrdersView.fxml
+ * @author Andy Li, Henry Lin
+ */
 public class StoreController {
+    @FXML private ComboBox phoneNumber;
+    @FXML private TextField orderTotal;
+    @FXML private ListView orders;
+
     private MenuController mainController;
-    @FXML
-    private ComboBox phoneNumber;
-    @FXML
-    private TextField orderTotal;
-    @FXML
-    private ListView orders;
     public static final DecimalFormat df2 = new DecimalFormat( "#0.00" );
+
+    /**
+     * Connects this controller with the main controller.
+     * Also populates the text field and list view.
+     *
+     * @param controller is the main controller
+     */
     public void setMainController(MenuController controller) {
         mainController = controller;
         phoneNumber.getItems().removeAll(phoneNumber.getItems());
@@ -31,6 +38,12 @@ public class StoreController {
         phoneNumber.getSelectionModel().selectFirst();
         display();
     }
+
+    /**
+     * removes an order from the list of all orders
+     *
+     * @param event
+     */
     @FXML
     void removeOrder(ActionEvent event){
         for (int i = 0; i < mainController.allOrders.getSize(); i++) {
@@ -48,6 +61,11 @@ public class StoreController {
         display();
     }
 
+    /**
+     * exports a file for printing
+     *
+     * @param event
+     */
     @FXML
     void exportFile(ActionEvent event) {
         FileChooser chooser = new FileChooser();
@@ -59,12 +77,22 @@ public class StoreController {
         mainController.allOrders.Export(targetFile);
         //write code to write to the file.
     }
+
+    /**
+     * When a phone number is selected in the combo box
+     * the proper items are displaayed
+     *
+     * @param event
+     */
     @FXML
     void selectOrder(ActionEvent event) {
         orders.getItems().clear();
         display();
     }
 
+    /**
+     * displays all items of the currently selected order
+     */
     private void display() {
         for (int i = 0; i < mainController.allOrders.getSize(); i++){
             if (mainController.allOrders.getPNumber(i).equals(phoneNumber.getValue())){

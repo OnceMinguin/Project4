@@ -10,33 +10,49 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-import java.util.ArrayList;
-
+/**
+ * Controller for the MainMenuView.fxml
+ * @author Henry Lin, Andy Li
+ */
 public class MenuController {
     @FXML private Button deluxe, hawaiian, pepperoni;
     @FXML private TextField phoneNumber;
+
     protected int lastClicked = -1;
     protected Order order = new Order();
     protected StoresOrders allOrders = new StoresOrders();
 
+    private static final int DELUXE_TYPE = 1;
+    private static final int HAWAIIAN_TYPE = 2;
+    private static final int PEPPERONI_TYPE = 3;
+
+    /**
+     * Method that launches on GUI initialization
+     * to set the last the event.
+     */
     @FXML
-    public void initialize() {
+    void initialize() {
         deluxe.setOnAction(e-> {
-            lastClicked = 1;
-            openPizza();
+            lastClicked = DELUXE_TYPE;
+            openPizza(e);
         });
         hawaiian.setOnAction(e->{
-            lastClicked = 2;
-            openPizza();
+            lastClicked = HAWAIIAN_TYPE;
+            openPizza(e);
         });
         pepperoni.setOnAction(e->{
-            lastClicked = 3;
-            openPizza();
+            lastClicked = PEPPERONI_TYPE;
+            openPizza(e);
         });
     }
 
+    /**
+     * Opens the pizza customization GUI if a phone
+     * number wa entered.
+     * @param event
+     */
     @FXML
-    void openPizza() {
+    void openPizza(ActionEvent event) {
         if (!order.checkNumber()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning!!");
@@ -47,7 +63,7 @@ public class MenuController {
         }
 
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/thisduts/CustomizePizza.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/thisduts/CustomizePizzaView.fxml"));
             BorderPane root = (BorderPane) loader.load();
 
             CustomizeController pizzaView = loader.getController();
@@ -63,6 +79,11 @@ public class MenuController {
         }
     }
 
+    /**
+     * Opens the view/place order GUI if a
+     * phone numbered was entered.
+     * @param event
+     */
     @FXML
     void placeOrder(ActionEvent event) {
         if (!order.checkNumber()) {
@@ -75,7 +96,7 @@ public class MenuController {
         }
 
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/thisduts/CurrentOrder.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/thisduts/CurrentOrderView.fxml"));
             BorderPane root = (BorderPane) loader.load();
 
             CurrOrderController orderView = loader.getController();
@@ -91,10 +112,14 @@ public class MenuController {
         }
     }
 
+    /**
+     * Opens the store orders GUI
+     * @param event
+     */
     @FXML
     void checkOrders(ActionEvent event) {
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/thisduts/StoreOrders.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/thisduts/StoreOrdersView.fxml"));
             BorderPane root = (BorderPane) loader.load();
 
             StoreController storeView = loader.getController();
@@ -110,6 +135,11 @@ public class MenuController {
         }
     }
 
+    /**
+     * Creates a new order when a phone number is entered.
+     * Also checks to make sure phone number is in a valid format.
+     * @param event
+     */
     @FXML
     void createOrder(ActionEvent event) {
         if (phoneNumber.getText().matches("[a-zA-Z]+")){

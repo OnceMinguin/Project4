@@ -6,6 +6,11 @@ import java.util.StringTokenizer;
 
 import static thisduts.PizzaMaker.createPizza;
 
+/**
+ * Order class that stores the phone number, price,
+ * and array list of all the pizzas.
+ * @author Henry Lin, Andy Li
+ */
 public class Order {
     private String pNumber;
     private ArrayList<Pizza> pizzas = new ArrayList<>();
@@ -14,29 +19,52 @@ public class Order {
     private double total;
 
     private static final double SALES_TAX = .06625;
-    public static final DecimalFormat df2 = new DecimalFormat( "#0.00" );
+    public static final DecimalFormat FORMAT = new DecimalFormat( "#0.00" );
 
+    /**
+     * default constructor
+     */
     public Order(){
     }
 
+    /**
+     * Constructor when given a phone number
+     * @param pNumber
+     */
     public Order(String pNumber) {
         this.pNumber = pNumber;
     }
 
+    /**
+     * check the phone number to see if it exists.
+     * @return whether the phone number was initialized
+     */
     public boolean checkNumber(){
         if (pNumber == null){
             return false;
         } return true;
     }
 
+    /**
+     * returns the phone number
+     * @return the phone number
+     */
     public String getPNumber() {
         return pNumber;
     }
 
+    /**
+     * adds a pizza to the order
+     * @param pizza
+     */
     public void addToOrder(Pizza pizza) {
         pizzas.add(pizza);
     }
 
+    /**
+     * finds the subtotal of the order
+     * @return the subtotal
+     */
     public double getSubTotal(){
         subTotal = 0;
         for (int i = 0; i < pizzas.size(); i++){
@@ -45,20 +73,37 @@ public class Order {
         return subTotal;
     }
 
+    /**
+     * finds the sales tax
+     * @return the sales tax
+     */
     public double getSalesTax(){
         salesTax = subTotal * SALES_TAX;
         return salesTax;
     }
 
+    /**
+     * finds the total price (subtotal + tax)
+     * @return the total price
+     */
     public double getTotal(){
         total = salesTax + subTotal;
         return total;
     }
 
+    /**
+     * finds the amount of pizzas in the order
+     * @return the amount of pizzas
+     */
     public int getSize() {
         return pizzas.size();
     }
 
+    /**
+     * finds the pizza string format for a specific pizza
+     * @param index
+     * @return a pizza in string format
+     */
     public String getPizza(int index){
         String string = new String();
         if(pizzas.get(index).checkType() == 1) {
@@ -70,10 +115,14 @@ public class Order {
         }
         string = string.concat(pizzas.get(index).getToppings());
         string = string.concat(pizzas.get(index).getSize());
-        string = string.concat(df2.format(pizzas.get(index).price()));
+        string = string.concat(FORMAT.format(pizzas.get(index).price()));
         return string;
     }
 
+    /**
+     * removes a pizza from the order
+     * @param text
+     */
     public void removePizza(String text) {
         Pizza compareTo;
         for (int i = 0; i < pizzas.size(); i++) {
@@ -119,6 +168,11 @@ public class Order {
         }
     }
 
+    /**
+     * converts a topping from string to enum form
+     * @param topping
+     * @return enum form of a topping
+     */
     private Topping toTopping(String topping){
         if (topping.equals("BlackOlives")){
             return Topping.BlackOlives;

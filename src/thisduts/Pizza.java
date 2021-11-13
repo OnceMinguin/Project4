@@ -2,6 +2,10 @@ package thisduts;
 
 import java.util.ArrayList;
 
+/**
+ * Parent pizza class, containing abstract methods and protected.
+ * @author Henry Lin, Andy Li
+ */
 public abstract class Pizza {
     protected ArrayList<Topping> toppings = new ArrayList<Topping>();
     protected Size size;

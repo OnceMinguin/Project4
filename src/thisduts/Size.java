@@ -6,6 +6,11 @@ package thisduts;
 public enum Size {
     Small, Medium, Large;
 
+    /**
+     * converts the size from enum to a string
+     * @param size
+     * @return string form of the size
+     */
     public String toString(Size size) {
         if (size.equals(Small)){
             return "small";

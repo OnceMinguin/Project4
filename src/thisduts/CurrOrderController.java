@@ -19,6 +19,8 @@ public class CurrOrderController {
 
     public static final DecimalFormat FORMAT = new DecimalFormat( "#0.00" );
     private MenuController mainController;
+    private static final int INDEX = 1;
+    private static final int EMPTY = 0;
 
     /**
      * Connects with the main controller, and allows access to protected variables in the main.
@@ -46,7 +48,7 @@ public class CurrOrderController {
      */
     @FXML
     void placeOrder(ActionEvent event) {
-        if (mainController.order.getSize() == 0){
+        if (mainController.order.getSize() == EMPTY){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning!!");
             alert.setHeaderText("User has not ordered a Pizza.");
@@ -75,7 +77,7 @@ public class CurrOrderController {
     @FXML
     void removePizza(ActionEvent event) {
         String temp = pizzaList.getSelectionModel().getSelectedItems().toString();
-        temp = temp.substring(1, temp.length() - 1);
+        temp = temp.substring(INDEX, temp.length() - INDEX);
         pizzaList.getItems().remove(temp);
         mainController.order.removePizza(temp);
         subTotal.setText(FORMAT.format(mainController.order.getSubTotal()));

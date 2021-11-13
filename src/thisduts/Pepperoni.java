@@ -96,7 +96,7 @@ public class Pepperoni extends Pizza {
     public boolean equals(Pizza pizza) {
         if (this.size != pizza.size){
             return false;
-        } else if (pizza.checkType() != 3) {
+        } else if (pizza.checkType() != PEPPERONI_TYPE) {
             return false;
         } else if (this.toppings.size() != pizza.toppings.size()) {
             return false;

@@ -25,7 +25,7 @@ public class MenuController {
     private static final int DELUXE_TYPE = 1;
     private static final int HAWAIIAN_TYPE = 2;
     private static final int PEPPERONI_TYPE = 3;
-
+    private static final int PHONENUMBER_LENGTH = 10;
     /**
      * Method that launches on GUI initialization
      * to set the last the event.
@@ -150,7 +150,7 @@ public class MenuController {
             alert.showAndWait();
             return;
         }
-        if (phoneNumber.getText().length() != 10 ){
+        if (phoneNumber.getText().length() != PHONENUMBER_LENGTH){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning!!");
             alert.setHeaderText("A non valid phone number was entered.");

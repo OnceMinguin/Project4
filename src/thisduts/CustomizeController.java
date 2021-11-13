@@ -29,7 +29,8 @@ public class CustomizeController {
     private static final int DELUXE_TYPE = 1;
     private static final int HAWAIIAN_TYPE = 2;
     private static final int PEPPERONI_TYPE = 3;
-
+    private static final int MAX_TOPPING = 7;
+    private static final int INDEX = 1;
     /**
      * Changes the size of the pizza when a different option
      * in the combo box selected.
@@ -130,7 +131,7 @@ public class CustomizeController {
     @FXML
     void addTopping(ActionEvent event) {
         String temp;
-        if (pizza.toppings.size() == 7) {
+        if (pizza.toppings.size() == MAX_TOPPING) {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Warning!!");
             alert.setHeaderText("7 is the maximum number of toppings.");
@@ -222,7 +223,7 @@ public class CustomizeController {
      */
     private String moveTopping(ListView currentList, ListView targetList) {
         String temp = currentList.getSelectionModel().getSelectedItems().toString();
-        temp = temp.substring(1, temp.length() - 1);
+        temp = temp.substring(INDEX, temp.length() - INDEX);
         if (mainController.lastClicked == DELUXE_TYPE){
             if (temp.equals("Green Pepper") || temp.equals("Pepperoni") || temp.equals("Mushroom")
                     || temp.equals("Sausage") || temp.equals("Onion")){

@@ -19,6 +19,12 @@ public class Order {
     private double total;
 
     private static final double SALES_TAX = .06625;
+    private static final int DELUXE_TYPE = 1;
+    private static final int HAWAIIAN_TYPE = 2;
+    private static final int NOTHING = 0;
+    private static final int DELUXE_TOPPINGS = 5;
+    private static final int HAWAIIAN_TOPPINGS = 2;
+    private static final int PEPPORONI_TOPPINGS = 1;
     public static final DecimalFormat FORMAT = new DecimalFormat( "#0.00" );
 
     /**
@@ -106,9 +112,9 @@ public class Order {
      */
     public String getPizza(int index){
         String string = new String();
-        if(pizzas.get(index).checkType() == 1) {
+        if(pizzas.get(index).checkType() == DELUXE_TYPE) {
             string = "Deluxe pizza, ";
-        } else if(pizzas.get(index).checkType() == 2) {
+        } else if(pizzas.get(index).checkType() == HAWAIIAN_TYPE) {
             string = "Hawaiian pizza, ";
         } else{
             string = "Pepperoni pizza, ";
@@ -127,7 +133,7 @@ public class Order {
         Pizza compareTo;
         for (int i = 0; i < pizzas.size(); i++) {
             StringTokenizer st1 = new StringTokenizer(text, ", ");
-            int total = 0;
+            int total = NOTHING;
             while(st1.hasMoreTokens()) {
                 st1.nextToken();
                 total++;
@@ -139,11 +145,11 @@ public class Order {
             compareTo = createPizza(flavor);
             int toppings;
             if (flavor.equals("Deluxe")) {
-                toppings = 5;
+                toppings = DELUXE_TOPPINGS;
             } else if (flavor.equals("Hawaiian")) {
-                toppings = 2;
+                toppings = HAWAIIAN_TOPPINGS;
             } else {
-                toppings = 1;
+                toppings = PEPPORONI_TOPPINGS;
             }
             for (int j = 0; j < toppings + 1; j++) {
                 st1.nextToken();
